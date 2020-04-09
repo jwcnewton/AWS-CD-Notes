@@ -1,0 +1,60 @@
+➜  ls-serverless awslocal iam list-groups                        
+{
+    "Groups": [
+        {
+            "Path": "/", 
+            "GroupId": "8mxwnyheqt77hm6kjw6z", 
+            "Arn": "arn:aws:iam::000000000000:group/CA-S3-All", 
+            "GroupName": "CA-S3-All"
+        }
+    ]
+}
+➜  ls-serverless awslocal iam attach-group-policy --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess --group-name CA-S3-All
+➜  ls-serverless awslocal iam list-groups                                                                                       
+{
+    "Groups": [
+        {
+            "Path": "/", 
+            "GroupId": "8mxwnyheqt77hm6kjw6z", 
+            "Arn": "arn:aws:iam::000000000000:group/CA-S3-All", 
+            "GroupName": "CA-S3-All"
+        }
+    ]
+}
+➜  ls-serverless awslocal iam list-attached-group-policies --group-name CA-S3-All
+{
+    "AttachedPolicies": [
+        {
+            "PolicyName": "AmazonS3FullAccess", 
+            "PolicyArn": "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+        }
+    ]
+}
+➜  ls-serverless awslocal iam list-policies | grep Full | grep S3                                                               
+            "PolicyName": "AmazonS3FullAccess", 
+            "Arn": "arn:aws:iam::aws:policy/AmazonS3FullAccess", 
+
+➜  ls-serverless awslocal iam create-user --user-name jon
+{
+    "User": {
+        "UserName": "jon", 
+        "Path": "/", 
+        "CreateDate": "2020-03-01T15:14:28.017Z", 
+        "UserId": "2j57pey2vhoaa7mi5yrm", 
+        "Arn": "arn:aws:iam::000000000000:user/jon"
+    }
+}
+
+// Give a user access key
+➜  ls-serverless awslocal iam create-access-key --user-name jon
+{
+    "AccessKey": {
+        "UserName": "jon", 
+        "Status": "Active", 
+        "CreateDate": "2020-03-01T15:19:35Z", 
+        "SecretAccessKey": "5MkfgIAVfNC84sWX4AO+9JxEN1zukJ/lGxxDrlBa", 
+        "AccessKeyId": "AKIARHRN6U8R5CZ01I2G"
+    }
+}
+//Add to group
+➜  ls-serverless awslocal iam add-user-to-group --user-name jon --group-name CA-S3-All
